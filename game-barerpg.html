@@ -1,5 +1,11 @@
 <html>
 <head>
+	<script type="text/javascript" src="akihabara/modernizr-1.5.min.js"></script>
+  <script>
+    if (Modernizr.canvas === false) {
+      window.location = "unsupported.html";
+    }
+  </script>
 	<script type="text/javascript" src="akihabara/gbox.js"></script>
 	<script type="text/javascript" src="akihabara/iphopad.js"></script>
 	<script type="text/javascript" src="akihabara/trigo.js"></script>
