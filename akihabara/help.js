@@ -420,6 +420,9 @@ var help={
 		return ((typeof(v) !== 'undefined') || (v===null));
 	},
 	
+  linkTo:function(linkName) {
+   window.location = gbox.getLink(linkName); 
+  },
   /**
   * Automatically configures a bunch of settings depending on the web browser and device that is viewing the game. Mostly sets the maximum number of audio channels and touch settings.
   */	

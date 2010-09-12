@@ -16,10 +16,10 @@
 <body>
 </body>
 <script>
+
 // ---
 // Copyright (c) 2010 Francesco Cottone, http://www.kesiev.com/
 // ---
-
 
 		  // Game-specific
 		  
@@ -34,7 +34,7 @@
 		  // So, let's calculate a distance threshold from the camera
 		  function objectIsAlive(th) {
 		  	return trigo.getDistance(th,gbox.getCamera())<800;
-		  }
+		  } 
 		  
 		  
 
@@ -110,6 +110,7 @@
 				delete tilemaps.map;
 				
 				// Here the map is loaded. During the load time, the game is still.
+                                this.level = level;
 				gbox.addBundle({
 					file:"resources/barerpg/bundle-map-"+level.level+".js",
 					onLoad:function(){ // This "onload" operation is triggered after everything is loaded.
@@ -117,6 +118,7 @@
 						gbox.createCanvas("tileslayer",{w:tilemaps.map.w,h:tilemaps.map.h}); // Prepare map's canvas
 						gbox.blitTilemap(gbox.getCanvasContext("tileslayer"),tilemaps.map); // Render map on the canvas
 						toys.topview.spawn(gbox.getObject("player","player"),{x:level.x,y:level.y}); // Displace player
+                                                persist.updateState(gbox.getObject("player","player"));
 					  	tilemaps.map.addObjects(); // Initialize map
 					}
 				});
@@ -143,6 +145,7 @@
 				  });
 
                                   if(persist.restoredData()) {
+
                                     persist.restoreGame();
                                   } else {
                                     spriter.addSprite('player',{});
@@ -150,12 +153,33 @@
 			};
 
 
-                        if(persist.restoreSavedData()) {
-                          // persist.restoreGameState();
-                          maingame.state = 105
-                        }
-			
-                        gbox.go();
+	maingame.addBlock=function(x,y,tileset,frame) {
+			gbox.addObject({
+				group:"walls",
+				tileset:tileset,
+				zindex:0, // Needed for zindexed objects
+				x:x,
+				y:y,
+				frame:frame,
+								
+				initialize:function() {
+					toys.topview.initialize(this); // Any particular initialization. Just the auto z-index
+				},
+				blit:function() {
+					if (gbox.objectIsVisible(this)) {
+						// Then the object. Notes that the y is y-z to have the "over the floor" effect.
+						gbox.blitTile(gbox.getBufferContext(),{tileset:this.tileset,tile:this.frame,dx:this.x,dy:this.y+this.z,camera:this.camera,fliph:this.fliph,flipv:this.flipv});
+					}
+				}
+	
+			  });
+		}
+
+                if(persist.restoreSavedData()) {
+                  persist.restoreGameState();
+                }
+
+                gbox.go();
 		  
 	}
 	

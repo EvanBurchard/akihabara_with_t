@@ -275,7 +275,7 @@ var gamecycle={
 								toys.resetToy(this,"fadeout");
 								this.stateIsReady();
 							}
-                                                        this.setState(200);
+                                                        this.setState(210);
                                                         break;
                                                       }
 
@@ -283,6 +283,7 @@ var gamecycle={
 					break;
 				}
 				case 200:// Game intro animation
+                                case 210:// Game Load
 				
 				case 300:// Start game
 				case 301:// Game is going
@@ -315,6 +316,13 @@ var gamecycle={
 
 								break;
 							}
+                                                        case 210: {
+								toys.resetToy(this,"fadein");
+								this.hud=toys.ui.hud("maingamehud");								
+								this.initializeGame();
+                                                                this.state = 300;
+                                                                // FALL THROUGH TO 300
+                                                        }
 							case 300: {
 								// Game start
 								this.level=this._nextlevel;
