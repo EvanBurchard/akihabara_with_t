@@ -4,6 +4,13 @@
     ["google", "http://google.com"],
     ["unsupported", "unsupported.html"]  
   ],
+  addMenu:[
+    ["menu1", 
+      [{id:"option1", label:"Link to something"}, 
+       {id:"option2", label:"Link to something"}
+      ],
+    ]
+  ],
 	// Graphic resources.
 	addImage:[	
 		["logo","resources/tlol/logo.png"],

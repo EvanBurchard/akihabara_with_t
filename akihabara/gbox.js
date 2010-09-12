@@ -232,6 +232,7 @@ var gbox={
 	_fonts:{},
         _sprites:{},
         _links:{},
+        _menus:{},
 	_tiles:{},
 	_images:{},
 	_camera:{},
@@ -1165,8 +1166,6 @@ var gbox={
   addLink:function(id,definition) {
       if(this._links[id])
          delete this._links[id];
-
-
       this._links[id] = definition;
   },
 
@@ -1176,6 +1175,21 @@ var gbox={
 
   deleteLink:function(id) {
      delete this._links[id];
+ 
+  },
+
+  addMenu:function(id,definition) {
+    if(this._menus[id])
+       delete this._menus[id];
+    this._menus[id] = definition;
+  },
+
+  getMenu:function(id) {
+     return this._menus[id];
+  },
+
+  deleteMenu:function(id) {
+     delete this._menus[id];
  
   },
   /**
@@ -1814,6 +1828,7 @@ var gbox={
                 if (pack.addSprite) for (var  i=0;i<pack.addSprite.length;i++) gbox.addSprite(pack.addSprite[i][0],pack.addSprite[i][1]);
 
 		if (pack.addLink) for (var i=0;i<pack.addLink.length;i++) gbox.addLink(pack.addLink[i][0],pack.addLink[i][1]);
+		if (pack.addMenu) for (var i=0;i<pack.addMenu.length;i++) gbox.addMenu(pack.addMenu[i][0],pack.addMenu[i][1]);
 		// Trigger the onLoad events in resource and loader
 		if (pack.onLoad) gbox._addtoloader({type:"exec-onl",func:pack.onLoad,call:call,pack:pack});				
 		if (call.onLoad) gbox._addtoloader({type:"exec-onl",func:call.onLoad,call:call,pack:pack});	
