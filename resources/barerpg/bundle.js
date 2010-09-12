@@ -1,4 +1,9 @@
 {
+  // Links
+  addLink:[
+    ["google", "http://google.com"],
+    ["unsupported", "unsupported.html"]  
+  ],
 	// Graphic resources.
 	addImage:[	
 		["logo","resources/tlol/logo.png"],

@@ -231,6 +231,7 @@ var gbox={
 	_localflags:{},
 	_fonts:{},
         _sprites:{},
+        _links:{},
 	_tiles:{},
 	_images:{},
 	_camera:{},
@@ -1161,6 +1162,22 @@ var gbox={
  
   },
   
+  addLink:function(id,definition) {
+      if(this._links[id])
+         delete this._links[id];
+
+
+      this._links[id] = definition;
+  },
+
+  getLink:function(id) {
+     return this._links[id];
+  },
+
+  deleteLink:function(id) {
+     delete this._links[id];
+ 
+  },
   /**
   * Creates a new Akihabara tileset, adding it to the engine.
   * @param {Object} t An object containing: <ul><li>id {String}: the new id of the tileset</li>
@@ -1796,6 +1813,7 @@ var gbox={
 		if (pack.addScript) for (var i=0;i<pack.addScript.length;i++) gbox.addScript(pack.addScript[i]);
                 if (pack.addSprite) for (var  i=0;i<pack.addSprite.length;i++) gbox.addSprite(pack.addSprite[i][0],pack.addSprite[i][1]);
 
+		if (pack.addLink) for (var i=0;i<pack.addLink.length;i++) gbox.addLink(pack.addLink[i][0],pack.addLink[i][1]);
 		// Trigger the onLoad events in resource and loader
 		if (pack.onLoad) gbox._addtoloader({type:"exec-onl",func:pack.onLoad,call:call,pack:pack});				
 		if (call.onLoad) gbox._addtoloader({type:"exec-onl",func:call.onLoad,call:call,pack:pack});	
