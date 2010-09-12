@@ -120,6 +120,7 @@
 					  	tilemaps.map.addObjects(); // Initialize map
 					}
 				});
+                                
 			  }
 		  
 		 	 // Game initialization
@@ -141,14 +142,20 @@
 					},
 				  });
 
-                                  if(persist.restoreSavedData()) {
-                                     persist.restoreGame();
+                                  if(persist.restoredData()) {
+                                    persist.restoreGame();
                                   } else {
                                     spriter.addSprite('player',{});
                                   }
 			};
+
+
+                        if(persist.restoreSavedData()) {
+                          // persist.restoreGameState();
+                          maingame.state = 105
+                        }
 			
-		  gbox.go();
+                        gbox.go();
 		  
 	}
 	

@@ -228,7 +228,8 @@ var gamecycle={
 				// main menu
 				case 100: 
 				case 101:
-				case 102: { // Press Start / Menu
+                                case 102: 
+                                case 105: { // Press Start / Menu
 					if (this.stateFirstIteration && (this.state == 100)) {
 						this._resetGroups();
 						this.gameTitleIntroAnimation(true);
@@ -267,6 +268,17 @@ var gamecycle={
 							break;
 						}
 						break;
+                                                case 105: { // Skip 
+							if (this.stateFirstIteration) {
+								gbox.resetChannel("bgmusic");
+								this._resetGroups();
+								toys.resetToy(this,"fadeout");
+								this.stateIsReady();
+							}
+                                                        this.setState(200);
+                                                        break;
+                                                      }
+
 					}
 					break;
 				}
@@ -300,6 +312,7 @@ var gamecycle={
 								this.hud=toys.ui.hud("maingamehud");								
 								this.initializeGame();
 								this.gameIntroAnimation(true);
+
 								break;
 							}
 							case 300: {

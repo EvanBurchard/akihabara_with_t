@@ -73,6 +73,7 @@ var persist = {
 
    _sprites:{},
    _state:{},
+   restoredGame: false,
 
 
    add: function(sprite,state) {
@@ -132,13 +133,23 @@ var persist = {
    },
 
    saveLocalStorage: function() {
+     persist._state = this.getState(maingame,persist._state);
+     if(persist._state['state'] > 300) {
+        persist._state['state'] = 105; // Go right to the game
+     }
+
      var jsonString = JSON.stringify([persist._sprites,persist._state]);
      Set_Cookie('akihabara',jsonString);
+   },
+
+   restoreGameState: function() {
+     this.setState(maingame,this._state);
    },
 
    restoreSavedData: function() {
      jsonString=  Get_Cookie('akihabara');
      if( jsonString) {
+       persist.restoredGame = true;
        saved_data = JSON.parse(jsonString);
        persist._sprites = saved_data[0];
        persist._state = saved_data[1];
@@ -147,6 +158,10 @@ var persist = {
        return false;
      }
 
+   },
+
+   restoredData: function() {
+      return persist.restoredGame;
    },
 
    fetch:function(sprite_id) {
