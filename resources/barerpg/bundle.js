@@ -13,10 +13,10 @@
   ],
 	// Graphic resources.
 	addImage:[	
-		["logo","resources/tlol/logo.png"],
-		["sprites","resources/tlol/cels.png"],
-		["font","resources/tlol/font.png"],
-		["fontbig","resources/tlol/fontbig.png"]
+		["logo","resources/barerpg/logo.png"],
+		["sprites","resources/barerpg/cels.png"],
+		["font","resources/barerpg/font.png"],
+		["fontbig","resources/barerpg/fontbig.png"]
 	],
 	addFont:[
 		{id:"small",image:"font",firstletter:" ",tileh:8,tilew:8,tilerow:255,gapx:0,gapy:0},
@@ -74,6 +74,6 @@
 	],
 	
 	addBundle:[
-		{file:"resources/tlol/bundle-credits.js"}
+		{file:"resources/barerpg/bundle-credits.js"}
 	]
 }

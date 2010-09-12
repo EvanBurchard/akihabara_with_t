@@ -73,6 +73,7 @@ var persist = {
 
    _sprites:{},
    _state:{},
+   restoredGame: false,
 
 
    add: function(sprite,state) {
@@ -81,6 +82,10 @@ var persist = {
      persist._sprites[obj_id] = this.mergeState(sprite,state);
      return this.wrap(sprite); 
 
+   },
+
+   updateState:function(sprite) {
+      persist._sprites[sprite.obj_id] = persist.getState(sprite,persist._sprites[sprite.obj_id]);
    },
 
    wrap:function(sprite) {
@@ -132,13 +137,41 @@ var persist = {
    },
 
    saveLocalStorage: function() {
+     persist._state = this.getState(maingame,persist._state);
+     if(persist._state['state'] > 300) {
+        persist._state['state'] = 210; // Go right to the game
+     }
+
+      player = gbox.getObject("player","player");
+     if(player && persist._state['level']) {
+       persist._state['level']['x'] = player.x;
+       persist._state['level']['y'] = player.y;
+     }
+
+
      var jsonString = JSON.stringify([persist._sprites,persist._state]);
      Set_Cookie('akihabara',jsonString);
+   },
+
+   restoreGameState: function() {
+     restoreState = {}
+     for(var i in this._state) {
+       switch(i) { 
+         case 'level':
+         case 'state':
+         restoreState[i] = this._state[i];
+       }
+     }
+     this._state = restoreState;
+     if(this._state['level'])
+        this._state['_nextlevel'] = this._state['level'];
+     this.setState(maingame,this._state);
    },
 
    restoreSavedData: function() {
      jsonString=  Get_Cookie('akihabara');
      if( jsonString) {
+       persist.restoredGame = true;
        saved_data = JSON.parse(jsonString);
        persist._sprites = saved_data[0];
        persist._state = saved_data[1];
@@ -147,6 +180,10 @@ var persist = {
        return false;
      }
 
+   },
+
+   restoredData: function() {
+      return persist.restoredGame;
    },
 
    fetch:function(sprite_id) {

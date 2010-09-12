@@ -228,7 +228,8 @@ var gamecycle={
 				// main menu
 				case 100: 
 				case 101:
-				case 102: { // Press Start / Menu
+                                case 102: 
+                                case 105: { // Press Start / Menu
 					if (this.stateFirstIteration && (this.state == 100)) {
 						this._resetGroups();
 						this.gameTitleIntroAnimation(true);
@@ -267,10 +268,22 @@ var gamecycle={
 							break;
 						}
 						break;
+                                                case 105: { // Skip 
+							if (this.stateFirstIteration) {
+								gbox.resetChannel("bgmusic");
+								this._resetGroups();
+								toys.resetToy(this,"fadeout");
+								this.stateIsReady();
+							}
+                                                        this.setState(210);
+                                                        break;
+                                                      }
+
 					}
 					break;
 				}
 				case 200:// Game intro animation
+                                case 210:// Game Load
 				
 				case 300:// Start game
 				case 301:// Game is going
@@ -300,8 +313,16 @@ var gamecycle={
 								this.hud=toys.ui.hud("maingamehud");								
 								this.initializeGame();
 								this.gameIntroAnimation(true);
+
 								break;
 							}
+                                                        case 210: {
+								toys.resetToy(this,"fadein");
+								this.hud=toys.ui.hud("maingamehud");								
+								this.initializeGame();
+                                                                this.state = 300;
+                                                                // FALL THROUGH TO 300
+                                                        }
 							case 300: {
 								// Game start
 								this.level=this._nextlevel;
