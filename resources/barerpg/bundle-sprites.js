@@ -61,9 +61,6 @@
 						toys.topview.adjustZindex(this);
 						if (!this.stilltimer&&!this.killed) toys.topview.setFrame(this); // set the right animation frame (if not attacking)
 						
-            if (gbox.keyIsHit("b")){
-              help.linkTo("google");
-            }						
 					},
 					blit:function() {
 					
